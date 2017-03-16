@@ -3,14 +3,18 @@
 [![codecov](https://codecov.io/gh/Arquisoft/participants0/branch/master/graph/badge.svg)](https://codecov.io/gh/Arquisoft/participants0)
 
 
-# participants0
+# dashboard3a
 
 [![Join the chat at https://gitter.im/Arquisoft/participants0](https://badges.gitter.im/Arquisoft/participants0.svg)](https://gitter.im/Arquisoft/participants0?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Skeleton of participants module
+Dashboard del sistema de participación
 
 # Authors
 
 - Herminio García González (@herminiogg)
 - Jose Emilio Labra Gayo (@labra)
+- David Fernández Garrido
+- Pablo Fernández Pérez
+- Andrés Eduardo Gargano García
+- Fernando García Álvarez
 
