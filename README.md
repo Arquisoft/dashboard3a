@@ -14,7 +14,6 @@ Dashboard del sistema de participación
 - Herminio García González (@herminiogg)
 - Jose Emilio Labra Gayo (@labra)
 - David Fernández Garrido
-- Pablo Fernández Pérez
 - Andrés Eduardo Gargano García
 - Fernando García Álvarez
 
