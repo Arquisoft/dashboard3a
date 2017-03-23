@@ -36,7 +36,7 @@ public class MainController {
 				public void run() {
 					kafkaProducer.send("exampleTopic");
 				}
-			}, 0, 500);
+			}, 0, 4500);
     	}
     	model.addAttribute("contents", MessageListener.contents);
         return "index";
