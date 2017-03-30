@@ -42,7 +42,6 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping("/send")
     public String send(Model model) {
         kafkaProducer.send("exampleTopic");
         return "redirect:/";

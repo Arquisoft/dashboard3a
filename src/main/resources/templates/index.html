@@ -1,6 +1,31 @@
 <html>
 <head>
 <title>Hola</title>
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script>
+function connect() {
+    var socket = new SockJS('/gs-guide-websocket');
+    var stompClient = Stomp.over(socket);
+    alert("Aquí");
+    stompClient.connect({}, function (frame) {
+    	alert("Acá");
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/exampleTopic', function (helloMessage) {
+        	alert("Nuevo mensaje");
+            showMessage(JSON.parse(helloMessage.body).content);
+        });
+    });
+}
+
+function showMessage(message) {
+    $("#messages").append("<p>" + message + "</p>");
+}
+
+window.onload = connect;
+</script>
 </head>
 <body>
 <h1>Dashboard3a</h1>
