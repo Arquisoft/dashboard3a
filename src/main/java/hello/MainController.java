@@ -7,8 +7,6 @@ import hello.producers.MockKafkaProducer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class MainController {
 
     private static final Logger logger = Logger.getLogger(MainController.class);
-    private static Timer timer;
     private List<SseEmitter> sseEmitters = Collections.synchronizedList(new ArrayList<>());
 
     @Autowired
@@ -29,15 +26,6 @@ public class MainController {
     
     @RequestMapping("/")
     public String landing(Model model) {
-    	if (timer == null) {
-    		timer = new Timer();
-    		timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					kafkaProducer.send("exampleTopic");
-				}
-			}, 0, 4500);
-    	}
     	model.addAttribute("contents", MessageListener.contents);
         return "index";
     }

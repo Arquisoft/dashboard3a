@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
-import hello.HelloMessage;
-
 /**
  * Created by herminio on 28/12/16.
  */

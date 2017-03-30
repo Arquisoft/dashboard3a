@@ -1,39 +1,31 @@
 <html>
 <head>
 <title>Hola</title>
-<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/jquery/3.2.0/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-<script>
-function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
-    var stompClient = Stomp.over(socket);
-    alert("Aquí");
-    stompClient.connect({}, function (frame) {
-    	alert("Acá");
-        setConnected(true);
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/exampleTopic', function (helloMessage) {
-        	alert("Nuevo mensaje");
-            showMessage(JSON.parse(helloMessage.body).content);
-        });
-    });
-}
+<script type="text/javascript">
+		$(document).ready(function() {
+			var messageList = $("#messages");
 
-function showMessage(message) {
-    $("#messages").append("<p>" + message + "</p>");
-}
+			var socket = new SockJS('/stomp');
 
-window.onload = connect;
+			var stompClient = Stomp.over(socket);
+
+            stompClient.connect({ }, function(frame) {
+				stompClient.subscribe("/topic/exampleTopic", function(data) {
+					var message = data.body;
+					messageList.append("<li>" + message + "</li>");
+				});
+            });
+		});
 </script>
 </head>
 <body>
 <h1>Dashboard3a</h1>
 <h2>Receiving messages for you:</h2>
-<div id="messages">
-     <div th:each="item: ${contents}">
-     	<p th:text="${item}" />
-     </div>
-</div>
+<ul id="messages">
+     <li th:each="item: ${contents}" th:text="${item}"></li>
+</ul>
 </body>
 </html>
