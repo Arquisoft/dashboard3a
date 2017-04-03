@@ -1,4 +1,4 @@
-package hello;
+package dashboard;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

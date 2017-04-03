@@ -1,4 +1,4 @@
-package hello;
+package dashboard;
 
 public class HelloMessage {
 

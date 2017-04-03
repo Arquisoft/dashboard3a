@@ -1,4 +1,4 @@
-package hello.model;
+package dashboard.model;
 
 import java.util.Date;
 import javax.persistence.*;

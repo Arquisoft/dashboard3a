@@ -1,4 +1,4 @@
-package hello.producers;
+package dashboard.producers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

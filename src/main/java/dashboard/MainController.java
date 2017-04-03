@@ -1,8 +1,5 @@
-package hello;
+package dashboard;
 
-
-import hello.listeners.MessageListener;
-import hello.producers.MockKafkaProducer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import dashboard.listeners.MessageListener;
+import dashboard.producers.MockKafkaProducer;
 
 @Controller
 public class MainController {
