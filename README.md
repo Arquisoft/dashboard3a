@@ -11,7 +11,7 @@ Dashboard del sistema de participación
 
 # Requisitos del navegador
 
-Para el funcionamiento asíncrono usa WebSockets, por lo que se debe usar en Firefox 42+, Chroem 57+ o Safari 10.1+
+Para el funcionamiento asíncrono usa WebSockets, por lo que se debe usar en Firefox 42+, Chrome 57+ o Safari 10.1+, sino no se actualizará automáticamente
 
 # Authors
 
