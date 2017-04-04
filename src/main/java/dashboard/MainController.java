@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import dashboard.listeners.MessageListener;
+import dashboard.model.ComentarioRepository;
 import dashboard.producers.MockKafkaProducer;
 
 @Controller
@@ -23,15 +24,10 @@ public class MainController {
 
     @Autowired
     private MockKafkaProducer kafkaProducer;
-    
+
     @RequestMapping("/")
     public String landing(Model model) {
     	model.addAttribute("contents", MessageListener.contents);
         return "index";
-    }
-
-    public String send(Model model) {
-        kafkaProducer.send("exampleTopic");
-        return "redirect:/";
     }
 }

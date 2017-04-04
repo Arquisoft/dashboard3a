@@ -4,28 +4,45 @@
 <script src="/webjars/jquery/3.2.0/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-<script type="text/javascript">
-		$(document).ready(function() {
-			var messageList = $("#messages");
+<script>
+	$(document).ready(function() {
+	var messageList = $("#messages");
 
-			var socket = new SockJS('/stomp');
+	var socket = new SockJS('/stomp');
 
-			var stompClient = Stomp.over(socket);
+	var stompClient = Stomp.over(socket);
 
-            stompClient.connect({ }, function(frame) {
-				stompClient.subscribe("/topic/exampleTopic", function(data) {
-					var message = data.body;
-					messageList.append("<li>" + message + "</li>");
-				});
-            });
+    stompClient.connect({ }, function(frame) {
+		stompClient.subscribe("/topic/sugerencias", function(data) {
+			var sugerencia = JSON.parse(data.body);
+			
+			$(".messageLi").each(function(i) {
+				if (this.innerHTML === sugerencia.contenido)
+					this.innerHTML = sugerencia.contenido + ": " + sugerencia.votosPositivos;
+				else
+					messageList.append("<li>" + sugerencia.contenido + ": " + sugerencia.votosPositivos + "</li>");
+			});
 		});
+		
+		stompClient.subscribe("/topic/comentarios", function(data) {
+			var comentario = JSON.parse(data.body);
+
+			$(".messageLi").each(function(i) {
+				if (this.innerHTML === comentario.contenido)
+					this.innerHTML = comentario.contenido;
+				else
+					messageList.append("<li>" + comentario.contenido + "</li>");
+			});
+		});
+    });
+});
 </script>
 </head>
 <body>
 <h1>Dashboard3a</h1>
 <h2>Receiving messages for you:</h2>
 <ul id="messages">
-     <li th:each="item: ${contents}" th:text="${item}"></li>
+     <li class="messageLi" th:each="item: ${contents}" th:text="${item}"></li>
 </ul>
 </body>
 </html>

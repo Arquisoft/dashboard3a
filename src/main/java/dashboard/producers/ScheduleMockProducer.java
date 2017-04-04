@@ -12,6 +12,7 @@ public class ScheduleMockProducer {
 	
     @Scheduled(fixedRate = 5000)
     public void trigger() {
-    	kafkaProducer.send("exampleTopic");
+    	kafkaProducer.sendSugerencia();
+    	kafkaProducer.sendComentario();
     }
 }
