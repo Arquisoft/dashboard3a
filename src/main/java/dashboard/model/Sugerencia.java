@@ -139,4 +139,9 @@ public class Sugerencia {
 		return "Sugerencia [id=" + id + ", contenido=" + contenido + ", usuario=" + usuario + ", categoria=" + categoria
 				+ "]";
 	}
+	
+	public int getValoracion() {
+		int votos = votosPositivos + votosNegativos;
+		return votosPositivos/votos;
+	}
 }
