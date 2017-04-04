@@ -15,24 +15,33 @@
     stompClient.connect({ }, function(frame) {
 		stompClient.subscribe("/topic/sugerencias", function(data) {
 			var sugerencia = JSON.parse(data.body);
+			var encontrado = false;
 			
 			$(".messageLi").each(function(i) {
-				if (this.innerHTML === sugerencia.contenido)
+				if (this.innerHTML === sugerencia.contenido) {
 					this.innerHTML = sugerencia.contenido + ": " + sugerencia.votosPositivos;
-				else
-					messageList.append("<li>" + sugerencia.contenido + ": " + sugerencia.votosPositivos + "</li>");
+					encontrado = true;
+					return false;
+				}
 			});
+			
+			if (!encontrado)
+				messageList.append("<li>" + sugerencia.contenido + ": " + sugerencia.votosPositivos + "</li>");
 		});
 		
 		stompClient.subscribe("/topic/comentarios", function(data) {
 			var comentario = JSON.parse(data.body);
-
+			var encontrado = false;
+			
 			$(".messageLi").each(function(i) {
-				if (this.innerHTML === comentario.contenido)
-					this.innerHTML = comentario.contenido;
-				else
-					messageList.append("<li>" + comentario.contenido + "</li>");
+				if (this.innerHTML === comentario.contenido) {
+					encontrado = true;
+					return false;
+				}
 			});
+			
+			if (!encontrado)
+				messageList.append("<li>" + comentario.contenido + "</li>");
 		});
     });
 });
