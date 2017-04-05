@@ -21,6 +21,8 @@ public class Ciudadano {
 	private String residencia;
 	private String nacionalidad;
 	private String dni; // Clave primaria
+	
+	private RolCiudadano rol;
 
 	@OneToOne(mappedBy = "ciudadano")
 	private Usuario usuario;
@@ -99,7 +101,13 @@ public class Ciudadano {
 		return dni;
 	}
 
-	// No hay set de dni
+	public RolCiudadano getRol() {
+		return rol;
+	}
+
+	public void setRol(RolCiudadano rol) {
+		this.rol = rol;
+	}
 
 	public Usuario getUsuario() {
 		return usuario;

@@ -42,7 +42,7 @@ public class HTMLController {
 
 		String email = parametro[0].split("=")[1].replace("%40", "@");
 		String contraseña = parametro[1].split("=")[1];
-		
+
 		String contraseñaEncriptada = Encrypter.getInstance().makeSHA1Hash(contraseña);
 		Ciudadano user = repository.findByEmailAndPassword(email, contraseñaEncriptada);
 
@@ -54,8 +54,22 @@ public class HTMLController {
 			model.addAttribute("nif", user.getDni());
 			model.addAttribute("address", user.getResidencia());
 			model.addAttribute("nationality", user.getNacionalidad());
+			model.addAttribute("role", user.getRol());
 
-			return "datos";
+			switch (user.getRol()) {
+
+			case PERSONAL_AYUNTAMIENTO:
+				return "ayuntamiento";
+
+			case CONCEJAL:
+				return "concejal";
+
+			case AUTORIDAD:
+				return "autoridad";
+
+			default:
+				return "datos";
+			}
 		}
 		else 
 			throw new CitizenNotFoundError();
