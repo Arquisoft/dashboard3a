@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import dashboard.model.ComentarioRepository;
-import dashboard.model.SugerenciaRepository;
+import model.ComentarioRepository;
+import model.SugerenciaRepository;
 
 @Controller
 public class MainController {

@@ -12,10 +12,10 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dashboard.model.Categoria;
-import dashboard.model.Comentario;
-import dashboard.model.Sugerencia;
-import dashboard.model.Usuario;
+import model.Categoria;
+import model.Comentario;
+import model.Sugerencia;
+import model.Usuario;
 
 import javax.annotation.ManagedBean;
 

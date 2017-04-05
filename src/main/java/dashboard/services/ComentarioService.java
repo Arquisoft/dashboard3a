@@ -2,8 +2,8 @@ package dashboard.services;
 
 import java.util.List;
 
-import dashboard.model.Comentario;
-import dashboard.model.Sugerencia;
+import model.Comentario;
+import model.Sugerencia;
 
 public interface ComentarioService {
 	List<Comentario> findAll();

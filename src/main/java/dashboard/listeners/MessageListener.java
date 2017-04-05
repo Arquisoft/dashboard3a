@@ -11,10 +11,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dashboard.model.Comentario;
-import dashboard.model.ComentarioRepository;
-import dashboard.model.Sugerencia;
-import dashboard.model.SugerenciaRepository;
+import model.Comentario;
+import model.ComentarioRepository;
+import model.Sugerencia;
+import model.SugerenciaRepository;
 
 /**
  * Created by herminio on 28/12/16.

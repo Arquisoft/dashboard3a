@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dashboard.model.Comentario;
-import dashboard.model.ComentarioRepository;
-import dashboard.model.Sugerencia;
+import model.Comentario;
+import model.ComentarioRepository;
+import model.Sugerencia;
 
 @Service
 public class ComentarioServiceImpl implements ComentarioService {
