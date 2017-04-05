@@ -1,6 +1,6 @@
 package asw.model;
 
-public enum RolUsuario {
+public enum RolCiudadano {
 	
 	PERSONAL_AYUNTAMIENTO, 
 	CONCEJAL,

@@ -14,7 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -28,8 +27,6 @@ public class Usuario {
 
 	private String usuario; // Clave primaria
 	private String contraseña;
-	
-	private RolUsuario rol;
 
 	@OneToOne
 	@JoinColumn(name = "CIUDADANO_ID")
@@ -69,14 +66,6 @@ public class Usuario {
 
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
-	}
-	
-	public RolUsuario getRol() {
-		return rol;
-	}
-
-	public void setRol(RolUsuario rol) {
-		this.rol = rol;
 	}
 
 	public Ciudadano getCiudadano() {
