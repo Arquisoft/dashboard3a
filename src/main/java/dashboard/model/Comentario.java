@@ -12,9 +12,9 @@ public class Comentario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String contenido;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Sugerencia sugerencia;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Usuario usuario;
 	@Temporal(TemporalType.DATE)
 	private Date fecha;

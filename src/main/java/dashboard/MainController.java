@@ -1,33 +1,26 @@
 package dashboard;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import dashboard.listeners.MessageListener;
 import dashboard.model.ComentarioRepository;
-import dashboard.producers.MockKafkaProducer;
+import dashboard.model.SugerenciaRepository;
 
 @Controller
 public class MainController {
 
-    private static final Logger logger = Logger.getLogger(MainController.class);
-    private List<SseEmitter> sseEmitters = Collections.synchronizedList(new ArrayList<>());
-
     @Autowired
-    private MockKafkaProducer kafkaProducer;
-
+    private SugerenciaRepository sugerenciaRepository;
+    
+    @Autowired
+    private ComentarioRepository comentarioRepository;
+    
     @RequestMapping("/")
     public String landing(Model model) {
-    	model.addAttribute("contents", MessageListener.contents);
+    	model.addAttribute("sugerencias", sugerenciaRepository.findAll());
+    	model.addAttribute("comentarios", comentarioRepository.findAll());
         return "index";
     }
 }

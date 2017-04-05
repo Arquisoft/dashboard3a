@@ -15,9 +15,9 @@ public class Sugerencia {
 	private String contenido;
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Usuario usuario;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Categoria categoria;
 	private int votosPositivos;
 	private int votosNegativos;

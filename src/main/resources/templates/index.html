@@ -6,8 +6,9 @@
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <script>
 	$(document).ready(function() {
-	var messageList = $("#messages");
-
+	var comentarioList = $("#comentarios");
+	var sugerenciaList = $("#sugerencias");
+	
 	var socket = new SockJS('/stomp');
 
 	var stompClient = Stomp.over(socket);
@@ -17,7 +18,7 @@
 			var sugerencia = JSON.parse(data.body);
 			var encontrado = false;
 			
-			$(".messageLi").each(function(i) {
+			$(".sugerenciaLi").each(function(i) {
 				if (this.innerHTML === sugerencia.contenido) {
 					this.innerHTML = sugerencia.contenido + ": " + sugerencia.votosPositivos;
 					encontrado = true;
@@ -26,14 +27,14 @@
 			});
 			
 			if (!encontrado)
-				messageList.append("<li>" + sugerencia.contenido + ": " + sugerencia.votosPositivos + "</li>");
+				sugerenciaList.append("<li>" + sugerencia.contenido + ": " + sugerencia.votosPositivos + "</li>");
 		});
 		
 		stompClient.subscribe("/topic/comentarios", function(data) {
 			var comentario = JSON.parse(data.body);
 			var encontrado = false;
 			
-			$(".messageLi").each(function(i) {
+			$(".comentarioLi").each(function(i) {
 				if (this.innerHTML === comentario.contenido) {
 					encontrado = true;
 					return false;
@@ -41,7 +42,7 @@
 			});
 			
 			if (!encontrado)
-				messageList.append("<li>" + comentario.contenido + "</li>");
+				comentarioList.append("<li>" + comentario.contenido + "</li>");
 		});
     });
 });
@@ -49,9 +50,13 @@
 </head>
 <body>
 <h1>Dashboard3a</h1>
-<h2>Receiving messages for you:</h2>
-<ul id="messages">
-     <li class="messageLi" th:each="item: ${contents}" th:text="${item}"></li>
+<h2>Sugerencias:</h2>
+<ul id="sugerencias">
+     <li class="sugerenciaLi" th:each="item: ${sugerencias}" th:text="${item.contenido}"></li>
+</ul>
+<h2>Comentarios:</h2>
+<ul id="comentarios">
+	<li class="comentarioLi" th:each="item: ${comentarios}" th:text="${item.contenido}"></li>
 </ul>
 </body>
 </html>
