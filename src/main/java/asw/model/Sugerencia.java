@@ -18,6 +18,10 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import asw.model.Association.Asignar;
+import asw.model.Association.AsignarCategoria;
+import asw.model.Association.AsignarSugerencia;
+
 @Entity
 @Table(name = "TSugerencias")
 public class Sugerencia {
@@ -53,10 +57,10 @@ public class Sugerencia {
 		super();
 		this.contenido = contenido;
 		this.fecha = new Date();
-		this.usuario = usuario;
-		this.categoria = categoria;
 		this.votosPositivos = 0;
 		this.votosNegativos = 0;
+		AsignarSugerencia.link(usuario, this);
+		AsignarCategoria.link(categoria, this);
 	}
 
 	public String getTitulo() {
@@ -91,6 +95,10 @@ public class Sugerencia {
 		return usuario;
 	}
 
+	protected void _setCategoria(Categoria categoria){
+		this.categoria = categoria;
+	}
+	
 	public Categoria getCategoria() {
 		return categoria;
 	}

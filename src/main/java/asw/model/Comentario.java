@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import asw.model.Association.Asignar;
+import asw.model.Association.AsignarComentario;
+
 @Entity
 @Table(name="TComentarios")
 public class Comentario {
@@ -24,9 +27,8 @@ public class Comentario {
 	public Comentario(String contenido, Sugerencia sugerencia, Usuario usuario) {
 		super();
 		this.contenido = contenido;
-		this.sugerencia = sugerencia;
-		this.usuario = usuario;
 		this.fecha = new Date();
+		AsignarComentario.link(this, sugerencia, usuario);
 	}
 
 	public String getContenido() {
