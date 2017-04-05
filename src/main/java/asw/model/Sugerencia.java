@@ -3,7 +3,20 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TSugerencias")
@@ -12,6 +25,7 @@ public class Sugerencia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String titulo;
 	private String contenido;
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
@@ -24,8 +38,13 @@ public class Sugerencia {
 	
 	@Transient
 	private double valoracion;
+	@Transient
+	private int votosTotales;
+	@Transient
+	private int numComentarios;
 	
-	@OneToMany(mappedBy="sugerencia")
+	@OneToMany(mappedBy="sugerencia", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Comentario> comentarios = new HashSet<>();
 	
 	Sugerencia(){}
@@ -38,6 +57,14 @@ public class Sugerencia {
 		this.categoria = categoria;
 		this.votosPositivos = 0;
 		this.votosNegativos = 0;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getContenido() {
@@ -150,5 +177,15 @@ public class Sugerencia {
 		else
 			valoracion = votosPositivos/votos;
 		return valoracion;
+	}
+	
+	public int getVotosTotales() {
+		votosTotales = votosNegativos + votosPositivos;
+		return votosTotales;
+	}
+	
+	public int getNumComentarios() {
+		numComentarios = comentarios.size();
+		return numComentarios;
 	}
 }

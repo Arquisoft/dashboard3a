@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Dashboard3a - Detalles sugerencia</title>
+</head>
+<body>
+	<h1>Detalles de la sugerencia</h1>
+	<p> <a href="graficas">Visualizar graficas</a> </p>
+	<table id="detallesSugerencia">
+		<tr>
+			<th>Id</th>
+			<th>Titulo</th>
+			<th>Fecha</th>
+			<th>Votos positivos</th>
+			<th>Votos negativos</th>
+			<th>Votos totales</th>
+		</tr>
+		<tr>
+			<td th:text="${detalles.id}" align="center"/>
+			<td th:text="${detalles.titulo}"/>
+			<td th:text="${detalles.fecha}"/>
+			<td th:text="${detalles.votosPositivos}" align="center" />
+			<td th:text="${detalles.votosNegativos}" align="center" />
+			<td th:text="${detalles.votosTotales}" align="center" />
+		</tr>
+	</table>
+	
+	<h2>Valoracion media de la propuesta:</h2>
+	<div th:if="${detalles.valoracion} &lt; 0.5">
+		<p th:text="${detalles.valoracion}" style="color:red;"></p>
+	</div>
+	<div th:unless="${detalles.valoracion} &lt; 0.5">
+		<p th:text="${detalles.valoracion}" style="color:green;"></p>
+	</div>
+	
+	<h2>Comentarios de la propuesta</h2>
+	<table id="tablaComentarios">
+		<tr>
+			<th>Id</th>
+			<th>Comentario</th>
+		</tr>
+		<tr th:each="comentario : ${detalles.comentarios}">
+			<td th:text="${comentario.id}" align="center"/>
+			<td th:text="${comentario.contenido}"/>
+		</tr>
+	</table>
+</body>
+</html>

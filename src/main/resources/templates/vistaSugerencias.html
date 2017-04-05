@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Dashboard3a - Listado sugerencias</title>
+</head>
+<body>
+	<h1>Propuestas actualmente en el sistema</h1>
+	<p><a href="graficas">Visualizar graficas</a></p>
+	<table id="tablaSugerencias">
+		<tr>
+			<th>Id</th>
+			<th>Titulo</th>
+			<th>Fecha</th>
+			<th>Votos totales</th>
+			<th>Num. comentarios</th>
+			<th>Detalles</th>
+		</tr>
+		<tr th:each="sugerencia : ${sugerencias}">
+			<td th:text="${sugerencia.id}" align="center"/>
+			<td th:text="${sugerencia.titulo}"/>
+			<td th:text="${sugerencia.fecha}"/>
+			<td th:text="${sugerencia.votosTotales}" align="center" />
+			<td th:text="${sugerencia.numComentarios}" align="center" />
+			<td><a th:href="${sugerencia.id}" th:text="Detalles"></a></td>
+		</tr>
+	</table>
+</body>
+</html>
