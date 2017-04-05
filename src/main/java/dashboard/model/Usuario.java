@@ -3,7 +3,6 @@ package dashboard.model;
 import java.util.HashSet;
 import java.util.Set;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -16,14 +15,16 @@ public class Usuario {
 
 	private String usuario; // Clave primaria
 	private String contraseña;
+	
+	private RolUsuario rol;
 
 	@OneToOne
 	@JoinColumn(name = "CIUDADANO_ID")
 	private Ciudadano ciudadano;
-	
-	@OneToMany(mappedBy="usuario")
+
+	@OneToMany(mappedBy = "usuario")
 	private Set<Sugerencia> sugerencias = new HashSet<>();
-	@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy = "usuario")
 	private Set<Comentario> comentarios = new HashSet<>();
 
 	Usuario() {
@@ -47,14 +48,20 @@ public class Usuario {
 		return usuario;
 	}
 
-	// No hay de usuario
-
 	public String getContraseña() {
 		return contraseña;
 	}
 
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
+	}
+	
+	public RolUsuario getRol() {
+		return rol;
+	}
+
+	public void setRol(RolUsuario rol) {
+		this.rol = rol;
 	}
 
 	public Ciudadano getCiudadano() {
@@ -64,11 +71,11 @@ public class Usuario {
 	protected void _setCiudadano(Ciudadano ciudadano) {
 		this.ciudadano = ciudadano;
 	}
-	
+
 	public Set<Sugerencia> getSugerencias() {
 		return new HashSet<>(sugerencias);
 	}
-	
+
 	protected Set<Sugerencia> _getSugerencias() {
 		return sugerencias;
 	}
@@ -76,12 +83,12 @@ public class Usuario {
 	public void setSugerencias(Set<Sugerencia> sugerencias) {
 		this.sugerencias = sugerencias;
 	}
-	
+
 	public Set<Comentario> getComentarios() {
 		return new HashSet<>(comentarios);
 	}
-	
-	protected Set<Comentario> _getComentarios(){
+
+	protected Set<Comentario> _getComentarios() {
 		return comentarios;
 	}
 
@@ -89,18 +96,18 @@ public class Usuario {
 		this.comentarios = comentarios;
 	}
 
-	protected void _addSugerencia(Sugerencia sugerencia){
+	protected void _addSugerencia(Sugerencia sugerencia) {
 		sugerencias.add(sugerencia);
 	}
-	
-	protected void _removeSugerencia(Sugerencia sugerencia){
+
+	protected void _removeSugerencia(Sugerencia sugerencia) {
 		sugerencias.remove(sugerencia);
 	}
-	
+
 	protected void _addComentario(Comentario comentario) {
 		comentarios.add(comentario);
 	}
-	
+
 	protected void _removeComentario(Comentario comentario) {
 		comentarios.remove(comentario);
 	}
@@ -133,5 +140,33 @@ public class Usuario {
 		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
+	}
+
+	public int mediaVotosPositivosDeTodasLasSugerencias() {
+		int votos = 0;
+		int votosPositivos = 0;
+
+		for (Sugerencia s : sugerencias) {
+			votos += s.getVotosPositivos() + s.getVotosNegativos();
+			votosPositivos += s.getVotosPositivos();
+		}
+
+		return votosPositivos / votos;
+	}
+
+	public Sugerencia sugerenciaMejorValorada() {
+		Sugerencia sugerenciaMejorValorada = null;
+
+		for (Sugerencia s : sugerencias) {
+			if (sugerenciaMejorValorada != null) {
+				if (s.getValoracion() > sugerenciaMejorValorada.getValoracion()) {
+					sugerenciaMejorValorada = s;
+				}
+			} else {
+				sugerenciaMejorValorada = s;
+			}
+		}
+
+		return sugerenciaMejorValorada;
 	}
 }
