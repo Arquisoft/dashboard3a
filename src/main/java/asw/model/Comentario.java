@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import asw.model.Association.Asignar;
 import asw.model.Association.AsignarComentario;
 
 @Entity

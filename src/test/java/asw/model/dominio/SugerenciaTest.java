@@ -110,13 +110,16 @@ public class SugerenciaTest {
 
 	@Test
 	public void testComentarios() {
+		assertTrue(sugerencia1.getComentarios().size() == 2);
 		assertTrue(sugerencia1.getComentarios().contains(comentario1));
 		assertTrue(sugerencia1.getComentarios().contains(comentario4));
 		
+		assertTrue(sugerencia2.getComentarios().size() == 3);
 		assertTrue(sugerencia2.getComentarios().contains(comentario2));
 		assertTrue(sugerencia2.getComentarios().contains(comentario3));
 		assertTrue(sugerencia2.getComentarios().contains(comentario5));
 		
+		assertTrue(sugerencia3.getComentarios().size() == 1);
 		assertTrue(sugerencia3.getComentarios().contains(comentario6));
 	}
 	
@@ -127,5 +130,29 @@ public class SugerenciaTest {
 		
 		assertTrue(comentarios.size() == 0);
 		assertTrue(sugerencia1.getComentarios().size() != 0);
+	}
+	
+	@Test
+	public void testEquals() {
+		Sugerencia sugerencia = new Sugerencia("Contenido sugerencia 1", categoria1, usuario1);
+		sugerencia.setTitulo("Titulo sugerencia 1");
+		for(int i = 0; i < 4; i++)
+			sugerencia.addVotoNegativo();
+		for(int i = 0; i < 3; i++)
+			sugerencia.addVotoPositivo();
+		
+		assertTrue(sugerencia.equals(sugerencia1));
+	}
+	
+	@Test
+	public void testToString() {
+		Sugerencia sugerencia = new Sugerencia("Contenido sugerencia 1", categoria1, usuario1);
+		sugerencia.setTitulo("Titulo sugerencia 1");
+		for(int i = 0; i < 4; i++)
+			sugerencia.addVotoNegativo();
+		for(int i = 0; i < 3; i++)
+			sugerencia.addVotoPositivo();
+		
+		assertEquals(sugerencia.toString(), sugerencia1.toString());
 	}
 }

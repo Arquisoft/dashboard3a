@@ -2,12 +2,14 @@ package asw.model.dominio;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import asw.model.Categoria;
+import asw.model.Ciudadano;
 import asw.model.Comentario;
 import asw.model.Sugerencia;
 import asw.model.Usuario;
@@ -132,5 +134,31 @@ public class UsuarioTest {
 		assertTrue(usuario1.getSugerencias().size() == 2);
 	}
 	
+	@Test
+	public void testConstructorConCiudadano() {
+		Ciudadano ciudadano = new Ciudadano("Fran", "Garcia", "e@email.com", new Date(), "Pamplona", "Española", "123456S");
+		
+		Usuario user = new Usuario("Paco", "ocap", ciudadano);
+		
+		assertTrue(user.getCiudadano().equals(ciudadano));
+		assertTrue(ciudadano.getUsuario().equals(user));
+		
+		assertTrue(user.getContraseña().equals("ocap"));
+	}
+	
+	@Test
+	public void testEquals() {
+		Usuario usuario = new Usuario("Pepe");
+		
+		assertTrue(usuario1.equals(usuario));
+	}
+	
+	@Test
+	public void testToString() {
+		Usuario usuario = new Usuario("Borja");
+		
+		String u = "Usuario [usuario=" + "Borja" + ", contraseña=" + "null" + "]";
+		assertEquals(u, usuario.toString());
+	}
 
 }

@@ -79,5 +79,19 @@ public class ComentarioTest {
 		
 		assertTrue(comentario6.getSugerencia().equals(sugerencia3));
 	}
+	
+	@Test
+	public void testEquals() {
+		Comentario comentario = new Comentario("Mal", sugerencia1, usuario3);
+		
+		assertTrue(comentario.equals(comentario1));
+	}
+	
+	@Test
+	public void testToString() {
+		Comentario comentario = new Comentario("Mal", sugerencia1, usuario3);
+
+		assertEquals(comentario1.toString(), comentario.toString());
+	}
 
 }
