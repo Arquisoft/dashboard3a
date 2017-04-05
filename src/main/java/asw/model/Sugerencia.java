@@ -22,6 +22,9 @@ public class Sugerencia {
 	private int votosPositivos;
 	private int votosNegativos;
 	
+	@Transient
+	private double valoracion;
+	
 	@OneToMany(mappedBy="sugerencia")
 	private Set<Comentario> comentarios = new HashSet<>();
 	
@@ -140,10 +143,12 @@ public class Sugerencia {
 				+ "]";
 	}
 	
-	public int getValoracion() {
+	public double getValoracion() {
 		int votos = votosPositivos + votosNegativos;
 		if(votos == 0)
-			return 0;
-		return votosPositivos/votos;
+			valoracion = 0;
+		else
+			valoracion = votosPositivos/votos;
+		return valoracion;
 	}
 }
