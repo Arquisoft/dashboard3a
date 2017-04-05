@@ -30,7 +30,7 @@ public class HTMLController {
 	@Autowired
 	private CitizenRepository repository;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String getLoginHtml(Model model) {
 		return "login";
 	}

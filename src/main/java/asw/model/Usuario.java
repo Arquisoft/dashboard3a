@@ -3,7 +3,17 @@ package asw.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TUsuarios")
@@ -20,9 +30,11 @@ public class Usuario {
 	@JoinColumn(name = "CIUDADANO_ID")
 	private Ciudadano ciudadano;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Sugerencia> sugerencias = new HashSet<>();
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Comentario> comentarios = new HashSet<>();
 
 	Usuario() {
