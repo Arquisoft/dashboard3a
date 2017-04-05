@@ -150,7 +150,8 @@ public class Usuario {
 			votos += s.getVotosPositivos() + s.getVotosNegativos();
 			votosPositivos += s.getVotosPositivos();
 		}
-
+		if(votos == 0)
+			return 0;
 		return votosPositivos / votos;
 	}
 

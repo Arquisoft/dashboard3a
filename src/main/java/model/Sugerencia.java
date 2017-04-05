@@ -142,6 +142,8 @@ public class Sugerencia {
 	
 	public int getValoracion() {
 		int votos = votosPositivos + votosNegativos;
+		if(votos == 0)
+			return 0;
 		return votosPositivos/votos;
 	}
 }
