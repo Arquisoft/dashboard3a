@@ -12,13 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "TUsuarios")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Usuario {
 
 	@Id
@@ -39,6 +38,13 @@ public class Usuario {
 	@JsonIgnore
 	private Set<Comentario> comentarios = new HashSet<>();
 
+	@Transient
+	@JsonIgnore
+	private Sugerencia sugerenciaMejorValorada;
+	@Transient
+	@JsonIgnore
+	private int mediaVotosPositivosTodasSugerencias;
+	
 	Usuario() {
 	};
 
@@ -156,12 +162,13 @@ public class Usuario {
 		}
 		if(votos == 0)
 			return 0;
-		else
-			return votosPositivos / votos;
+		else {
+			mediaVotosPositivosTodasSugerencias = votosPositivos / votos;
+			return mediaVotosPositivosTodasSugerencias;
+		}
 	}
 
 	public Sugerencia getSugerenciaMejorValorada() {
-		Sugerencia sugerenciaMejorValorada = null;
 
 		for (Sugerencia s : sugerencias) {
 			if (sugerenciaMejorValorada != null) {
