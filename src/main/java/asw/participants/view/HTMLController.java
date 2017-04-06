@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import asw.util.Encrypter;
 import asw.model.Ciudadano;
+import asw.model.RolCiudadano;
 import asw.participants.information.errors.CitizenNotFoundError;
 import asw.participants.information.errors.ErrorInterface;
 import asw.model.CitizenRepository;
@@ -56,20 +57,10 @@ public class HTMLController {
 			model.addAttribute("nationality", user.getNacionalidad());
 			model.addAttribute("role", user.getRol());
 
-			switch (user.getRol()) {
+			if (user.getRol() != RolCiudadano.PARTICIPANT) 
+				return "vistaSugerencias";					
 
-			case PERSONAL_AYUNTAMIENTO:
-				return "ayuntamiento";
-
-			case CONCEJAL:
-				return "concejal";
-
-			case AUTORIDAD:
-				return "autoridad";
-
-			default:
-				return "datos";
-			}
+			return "datos";
 		}
 		else 
 			throw new CitizenNotFoundError();

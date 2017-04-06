@@ -4,5 +4,6 @@ public enum RolCiudadano {
 	
 	PERSONAL_AYUNTAMIENTO, 
 	CONCEJAL,
-	AUTORIDAD;
+	AUTORIDAD,
+	PARTICIPANT;
 }
