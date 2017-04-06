@@ -1,28 +1,41 @@
 package asw.dashboard.cucumber;
 
-import static org.junit.Assert.assertTrue;
+import cucumber.api.java.en.Given;
 
-import cucumber.api.java.es.Cuando;
-import cucumber.api.java.es.Entonces;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class DashboardLoginStep {
 
-	//private WebDriver driver = DriverGenerator.generarDriverFirefoxPortable();
-	//private WebDriver driver = DriverGenerator.generarDriverFirefox();
-	//private WebDriver driver = DriverGenerator.generarDriverHTML();
-	
-	@Cuando("^el administrador se encuentra en la pagina de login$")
-	public void el_administrador_se_encuentra_en_la_pagina_de_login() {
-	}
+	private WebDriver driver = (WebDriver) new FirefoxDriver();
 
-	@Entonces("^inserta su mail \"(.+)\" y su password \"(.+)\"$")
-	public void inserta_su_mail_y_su_password(String name, String password) {		
-
-	}
-
-	@Entonces("^se logea de manera correcta$")
-	public void se_logea_de_manera_correcta() {	
-
+	@Given("^the politician is in the login page$")
+	public void isInLoginPage() {		
+		driver.navigate().to("http://localhost:8090/");
 		
+		driver.findElement(By.id("email"));
+		driver.findElement(By.id("password"));
+	}
+
+	@Then("^introduces his credentials, \"(.+)\" and \"(.+)\" into the login form$")
+	public void insertCredentials(String mail, String psw) {
+		driver.findElement(By.id("email")).sendKeys(mail);
+		driver.findElement(By.id("password")).sendKeys(psw);
+	}
+
+	@When("^he pushes the \"Log in\" button$")
+	public void pushLogIn() {	
+		 driver.findElement(By.id("loginButton")).click();
+	}
+
+	@And("^he gets redirected to the dashboard view$")
+	public void isInDashboard() {	
+		driver.findElement(By.id("tablaSugerencias"));		
+		driver.quit();
 	}
 }
