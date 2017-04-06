@@ -66,11 +66,4 @@ public class CategoriaTest {
 		assertTrue(sugerencias.size() == 0);
 		assertTrue(categoria1.getSugerencias().size() != 0);
 	}
-	
-	@Test
-	public void testEquals() {
-		Categoria categoria = new Categoria("Categoria 1");
-		
-		assertTrue(categoria.equals(categoria1));
-	}
 }

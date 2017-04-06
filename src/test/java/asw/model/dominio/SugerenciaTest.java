@@ -2,7 +2,6 @@ package asw.model.dominio;
 
 import static org.junit.Assert.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
@@ -155,23 +154,5 @@ public class SugerenciaTest {
 			sugerencia.addVotoPositivo();
 		
 		assertEquals(sugerencia.toString(), sugerencia1.toString());
-	}
-	
-	@Test
-	public void testContenido() {
-		Sugerencia sugerencia = new Sugerencia("Contenido sugerencia", categoria1, usuario1);
-		assertTrue(sugerencia.getContenido().equals("Contenido sugerencia"));
-		
-		sugerencia.setContenido("Ahora cambio el contenido");
-		assertTrue(sugerencia.getContenido().equals("Ahora cambio el contenido"));
-	}
-	
-	@Test
-	public void testSetComentarios() {
-		assertTrue(sugerencia1.getComentarios().size() == 2);
-		
-		Set<Comentario> comentarios = new HashSet<>();
-		sugerencia1.setComentarios(comentarios);
-		assertTrue(sugerencia1.getComentarios().size() == 0);
 	}
 }
