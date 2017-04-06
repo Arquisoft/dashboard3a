@@ -31,7 +31,7 @@
 
 					tabla.append(htmlString);
 
-					Push.create("Nuevo comentario para " + comentario.sugerencia.titulo, {
+					Push.create("Nuevo comentario", {
     				body: comentario.contenido,
     				timeout: 4000,
     				onClick: function () {
