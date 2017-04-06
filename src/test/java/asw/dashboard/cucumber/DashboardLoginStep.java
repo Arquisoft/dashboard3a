@@ -17,7 +17,7 @@ public class DashboardLoginStep {
 	@Given("^the politician is in the login page$")
 	public void isInLoginPage() {	
 		sleepOneSecond();
-		driver.navigate().to("http://localhost:8090/");
+		driver.navigate().to("http://localhost:8090/login");
 
 		sleepOneSecond();		
 		driver.findElement(By.id("email"));
