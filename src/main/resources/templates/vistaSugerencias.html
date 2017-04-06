@@ -2,8 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"/>
-	<meta http-equiv="refresh" content="2"/> 
 	<title>Dashboard3a - Listado sugerencias</title>
+	<script src="/webjars/jquery/3.2.0/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script>
+		$(document).ready(function() {
+		var tabla = $("#tablaSugerencias");
+
+		var socket = new SockJS('/stomp');
+
+		var stompClient = Stomp.over(socket);
+
+	    stompClient.connect({ }, function(frame) {
+			stompClient.subscribe("/topic/sugerencias", function(data) {
+				var sugerencia = JSON.parse(data.body);
+				var encontrado = false;
+
+				$(".titSugerencia").each(function(i) {
+					if (this.innerHTML === sugerencia.titulo) {
+						$(this).next().next().html("" + (sugerencia.votosPositivos + sugerencia.votosNegativos));
+						encontrado = true;
+						return false;
+					}
+				});
+
+				if (!encontrado) {
+					var htmlstring = `
+					<tr>
+						<td>${sugerencia.id}</td>
+						<td class="titSugerencia">${sugerencia.titulo}</td>
+						<td>${sugerencia.fecha}</td>
+						<td class="votos_totales" align="center">${sugerencia.votosTotales}</td>
+						<td align="center">${sugerencia.numComentarios}</td>
+						<td><a href="${sugerencia.id}">Detalles</a></td>
+					</tr>
+					`;
+					 tabla.append(htmlstring);
+				}
+			});
+	    });
+	});
+	</script>
 </head>
 <body>
 	<h1>Propuestas actualmente en el sistema</h1>
@@ -19,7 +59,7 @@
 		</tr>
 		<tr th:each="sugerencia : ${sugerencias}">
 			<td th:text="${sugerencia.id}" align="center"/>
-			<td th:text="${sugerencia.titulo}"/>
+			<td class="titSugerencia" th:text="${sugerencia.titulo}"/>
 			<td th:text="${sugerencia.fecha}"/>
 			<td th:text="${sugerencia.votosTotales}" align="center" />
 			<td th:text="${sugerencia.numComentarios}" align="center" />

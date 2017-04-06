@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import asw.model.ComentarioRepository;
+import asw.model.Sugerencia;
 import asw.model.SugerenciaRepository;
 
 @Controller
@@ -41,8 +42,10 @@ public class MainController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	public String detalles(@PathVariable("id") String id, Model model) {
     	Long ident = Long.valueOf(id);
+    	Sugerencia sugerencia = sugerenciaRepository.findOne(ident);
 		model.addAttribute("id", id);
-		model.addAttribute("detalles", sugerenciaRepository.findOne(ident));
+		model.addAttribute("detalles", sugerencia);
+		model.addAttribute("comentarios", sugerencia.getComentarios());
 		return "detallesSugerencia";
     }
 }

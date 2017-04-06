@@ -37,7 +37,9 @@ public class MessageListener {
     public void listenSugerencia(String data) {
         logger.info("New suggestion received: \"" + data + "\"");
         try {
-			sugerenciaRepository.save(new ObjectMapper().readValue(data, Sugerencia.class));
+        	Sugerencia sugerencia = new ObjectMapper().readValue(data, Sugerencia.class);
+			sugerencia = sugerenciaRepository.saveAndFlush(sugerencia);
+			data = new ObjectMapper().writeValueAsString(sugerencia);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -49,7 +51,9 @@ public class MessageListener {
     public void listenComentario(String data) {
     	logger.info("New comment received: \"" + data + "\"");
     	try {
-			comentarioRepository.save(new ObjectMapper().readValue(data, Comentario.class));
+    		Comentario comentario = new ObjectMapper().readValue(data, Comentario.class);
+			comentario = comentarioRepository.saveAndFlush(comentario);
+			data = new ObjectMapper().writeValueAsString(comentario);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
