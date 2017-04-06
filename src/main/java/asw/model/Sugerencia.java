@@ -126,6 +126,18 @@ public class Sugerencia {
 	public void addVotoNegativo() {
 		this.votosNegativos++;
 	}
+	
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	
+	public void setVotosPositivos(int votosPositivos) {
+		this.votosPositivos = votosPositivos;
+	}
+	
+	public void setVotosNegativos(int votosNegativos) {
+		this.votosNegativos = votosNegativos;
+	}
 
 	@Override
 	public int hashCode() {

@@ -27,6 +27,8 @@ public class Comentario {
 		this.sugerencia = sugerencia;
 		this.usuario = usuario;
 		this.fecha = new Date();
+		
+		Association.AsignarComentario.link(this, sugerencia, usuario);
 	}
 
 	public String getContenido() {
@@ -43,6 +45,10 @@ public class Comentario {
 	
 	public Date getFecha(){
 		return fecha;
+	}
+	
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public Sugerencia getSugerencia() {

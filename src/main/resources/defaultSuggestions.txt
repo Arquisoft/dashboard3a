@@ -1,0 +1,10 @@
+Sugerencia 1;Sugerencia de prueba 1;06/04/2017;us1;cat1;10;5
+Sugerencia 2;Sugerencia de prueba 2;06/04/2017;us2;cat2;5;10
+Sugerencia 3;Sugerencia de prueba 3;06/04/2017;us3;cat3;0;10
+Sugerencia 4;Sugerencia de prueba 4;06/04/2017;us3;cat3;10;0
+Sugerencia 5;Sugerencia de prueba 5;06/04/2017;us4;cat4;1;2
+Sugerencia 6;Sugerencia de prueba 6;06/04/2017;us5;cat4;20;30
+Sugerencia 7;Sugerencia de prueba 7;06/04/2017;us5;cat5;10;50
+Sugerencia 8;Sugerencia de prueba 8;06/04/2017;us6;cat6;0;100
+Sugerencia 9;Sugerencia de prueba 9;06/04/2017;us7;cat3;100;200
+Sugerencia 10;Sugerencia de prueba 10;06/04/2017;us5;cat2;34;45
