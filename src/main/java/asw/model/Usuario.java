@@ -16,6 +16,8 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import asw.model.Association.Asignar;
+
 @Entity
 @Table(name = "TUsuarios")
 public class Usuario {
@@ -55,7 +57,7 @@ public class Usuario {
 	public Usuario(String usuario, String contraseña, Ciudadano ciudadano) {
 		this(usuario);
 		this.contraseña = contraseña;
-		this.ciudadano = ciudadano;
+		Asignar.link(this, ciudadano);
 	}
 
 	public Long getId() {

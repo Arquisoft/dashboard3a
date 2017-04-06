@@ -44,4 +44,18 @@ public class Association {
 			comentario._setUsuario(null);
 		}
 	}
+	
+	public static class AsignarCategoria {
+		
+		public static void link(Categoria categoria, Sugerencia sugerencia) {
+			categoria.addSugerencia(sugerencia);
+			sugerencia._setCategoria(categoria);
+		}
+		
+		public static void unlink(Categoria categoria, Sugerencia sugerencia) {
+			categoria._getSugerencias().remove(sugerencia);
+			sugerencia._setCategoria(null);
+		}
+		
+	}
 }
