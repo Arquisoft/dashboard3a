@@ -6,10 +6,12 @@
 	<script src="/webjars/jquery/3.2.0/jquery.min.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.13/push.min.js"></script>
 	<script>
 		$(document).ready(function() {
 		var tabla = $("#tablaComentarios");
+		var idSug = parseInt($("#idSugerencia").html());
 
 		var socket = new SockJS('/stomp');
 
@@ -19,32 +21,64 @@
 			stompClient.subscribe("/topic/comentarios", function(data) {
 				var comentario = JSON.parse(data.body);
 
-				var htmlString = `
-				<tr>
-					<td align="center">${comentario.id}</td>
-					<td>${comentario.contenido}</td>
-				</tr>
-				`;
+				if (comentario.sugerencia.id === idSug) {
+					var htmlString = `
+					<tr>
+						<td align="center">${comentario.id}</td>
+						<td>${comentario.contenido}</td>
+					</tr>
+					`;
 
-				tabla.append(htmlString);
+					tabla.append(htmlString);
+
+					Push.create("Nuevo comentario para " + comentario.sugerencia.titulo, {
+    				body: comentario.contenido,
+    				timeout: 4000,
+    				onClick: function () {
+        			window.focus();
+        			this.close();
+    				}
+					});
+				}
+			});
+
+			stompClient.subscribe("/topic/sugerencias", function(data) {
+				var sugerencia = JSON.parse(data.body);
+
+				if (sugerencia.id === idSug) {
+						var positivosAntes = parseInt($("#votosPositivos").html());
+						var negativosAntes = parseInt($("#votosNegativos").html());
+						$("#votosPositivos").html(sugerencia.votosPositivos.toString());
+						$("#votosNegativos").html(sugerencia.votosNegativos.toString());
+						$("#votosTotales").html("" + (sugerencia.votosPositivos + sugerencia.votosNegativos));
+						window.myChart.data.datasets[0].data[0] = sugerencia.votosPositivos;
+						window.myChart.data.datasets[0].data[1] = sugerencia.votosNegativos;
+						window.myChart.update();
+
+						if (sugerencia.votosPositivos > positivosAntes) {
+							Push.create("Voto positivo" {
+		    				body: sugerencia.titulo,
+		    				timeout: 4000,
+		    				onClick: function () {
+		        			window.focus();
+		        			this.close();
+		    				}
+							});
+						}
+
+						if (sugerencia.votosNegativos > negativosAntes) {
+							Push.create("Voto negativo", {
+		    				body: sugerencia.titulo,
+		    				timeout: 4000,
+		    				onClick: function () {
+		        			window.focus();
+		        			this.close();
+		    				}
+							});
+						}
+				}
 			});
 	    });
-	});
-	</script>
-	<script>
-	var ctx = document.getElementById("myChart").getContext('2d');
-	var myChart = new Chart(ctx, {
-	  type: 'pie',
-	  data: {
-	    labels: ["Votos Positivos", "Votos Negativos"],
-	    datasets: [{
-	      backgroundColor: [
-	        "#2ecc71",
-	        "#3498db",
-	      ],
-	      data: [${detalles.votosPositivos}, ${detalles.votosNegativos}]
-	    }]
-	  }
 	});
 	</script>
 </head>
@@ -63,21 +97,21 @@
 			<th>Votos totales</th>
 		</tr>
 		<tr>
-			<td th:text="${detalles.id}" align="center" />
+			<td id="idSugerencia" th:text="${detalles.id}" align="center" />
 			<td th:text="${detalles.titulo}" />
 			<td th:text="${detalles.fecha}" />
-			<td th:text="${detalles.votosPositivos}" align="center" />
-			<td th:text="${detalles.votosNegativos}" align="center" />
-			<td th:text="${detalles.votosTotales}" align="center" />
+			<td id="votosPositivos" th:text="${detalles.votosPositivos}" align="center" />
+			<td id="votosNegativos" th:text="${detalles.votosNegativos}" align="center" />
+			<td id="votosTotales" th:text="${detalles.votosTotales}" align="center" />
 		</tr>
 	</table>
 
 	<h2>Valoracion media de la propuesta:</h2>
-	<div th:if="${detalles.valoracion} &lt; 0.5">
-		<p th:text="${detalles.valoracion}" style="color: red;"></p>
+	<div th:if="${valoracion} &lt; 0.5">
+		<p th:text="${valoracion}" style="color: red;"></p>
 	</div>
-	<div th:unless="${detalles.valoracion} &lt; 0.5">
-		<p th:text="${detalles.valoracion}" style="color: green;"></p>
+	<div th:unless="${valoracion} &lt; 0.5">
+		<p th:text="${valoracion}" style="color: green;"></p>
 	</div>
 
 	<h2>Comentarios de la propuesta</h2>
@@ -92,6 +126,31 @@
 		</tr>
 	</table>
 	<h2>Diagrama circular - Relación votos</h2>
-	<canvas id="myChart" width="400" height="400"></canvas>
+	<div id="canvas-holder" style="width:400px">
+		<canvas id="myChart"></canvas>
+	</div>
+	<script>
+	var ctx = document.getElementById("myChart").getContext('2d');
+window.myChart = new Chart(ctx, {
+type: 'pie',
+responsive: true,
+maintainAspectRatio: false,
+data: {
+  labels: ["Votos Positivos", "Votos Negativos"],
+  datasets: [{
+    backgroundColor: [
+      "#2ecc71",
+      "#3498db",
+      "#95a5a6",
+      "#9b59b6",
+      "#f1c40f",
+      "#e74c3c",
+      "#34495e"
+    ],
+    data: [parseInt(document.getElementById("votosPositivos").innerHTML), parseInt(document.getElementById("votosNegativos").innerHTML)]
+  }]
+}
+});
+	</script>
 </body>
 </html>

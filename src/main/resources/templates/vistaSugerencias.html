@@ -6,6 +6,7 @@
 	<script src="/webjars/jquery/3.2.0/jquery.min.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 	<script>
 		$(document).ready(function() {
 		var tabla = $("#tablaSugerencias");
@@ -32,7 +33,7 @@
 					<tr>
 						<td>${sugerencia.id}</td>
 						<td class="titSugerencia">${sugerencia.titulo}</td>
-						<td>${sugerencia.fecha}</td>
+						<td>${moment(new Date(sugerencia.fecha)).format("YYYY-MM-DD")}</td>
 						<td class="votos_totales" align="center">${sugerencia.votosTotales}</td>
 						<td align="center">${sugerencia.numComentarios}</td>
 						<td><a href="${sugerencia.id}">Detalles</a></td>

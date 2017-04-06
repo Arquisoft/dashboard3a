@@ -55,12 +55,21 @@ public class Comentario {
 		return sugerencia;
 	}
 	
+	public void setSugerencia(Sugerencia sugerencia) {
+		this.sugerencia = sugerencia;
+	}
+	
 	protected void _setSugerencia(Sugerencia sugerencia){
 		this.sugerencia = sugerencia;
 	}
 
 	public Usuario getUsuario() {
 		return usuario;
+	}
+	
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	protected void _setUsuario(Usuario usuario){
@@ -108,5 +117,5 @@ public class Comentario {
 	public String toString() {
 		return "Comentario [id=" + id + ", contenido=" + contenido + ", sugerencia=" + sugerencia + ", usuario="
 				+ usuario + "]";
-	};
+	}
 }

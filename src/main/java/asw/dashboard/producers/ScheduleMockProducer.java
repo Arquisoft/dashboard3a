@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import asw.model.Comentario;
 import asw.model.Sugerencia;
 import asw.model.SugerenciaRepository;
 
@@ -21,7 +22,7 @@ public class ScheduleMockProducer {
 	@Scheduled(fixedRate = 5000)
 	public void trigger() {
 		kafkaProducer.sendSugerencia();
-		kafkaProducer.sendComentario();
+		//kafkaProducer.sendComentario();
 
 		List<Sugerencia> sugerencias = sugerenciaRepository.findAll();
 
@@ -29,13 +30,17 @@ public class ScheduleMockProducer {
 			for (int i = 0; i < 5; i++) {
 				int index = (int) (Math.random() * sugerencias.size());
 				Sugerencia sugerencia = sugerencias.get(index);
-
+				
 				if (Math.round(Math.random()) == 1)
 					sugerencia.addVotoPositivo();
 				else
 					sugerencia.addVotoNegativo();
 
 				kafkaProducer.sendMessageJSON("sugerencias", sugerencia);
+
+				Comentario comentario = new Comentario("contenido" + System.currentTimeMillis(),
+						sugerencia, sugerencia.getUsuario());
+				kafkaProducer.sendMessageJSON("comentarios", comentario);
 			}
 		}
 	}

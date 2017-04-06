@@ -78,17 +78,16 @@ public class SugerenciaTest {
 		assertTrue(sugerencia1.getVotosPositivos() == 3);
 		assertTrue(sugerencia1.getVotosNegativos() == 4);
 		assertTrue(sugerencia1.getVotosTotales() == 7);
-		assertTrue(sugerencia1.getValoracion() == (3/7));
+		assertTrue(sugerencia1.getValoracion() == (3/7d));
 		
 		assertTrue(sugerencia2.getVotosPositivos() == 6);
 		assertTrue(sugerencia2.getVotosNegativos() == 2);
 		assertTrue(sugerencia2.getVotosTotales() == 8);
-		assertTrue(sugerencia1.getValoracion() == (6/8));
-		
+
 		assertTrue(sugerencia3.getVotosPositivos() == 6);
 		assertTrue(sugerencia3.getVotosNegativos() == 10);
 		assertTrue(sugerencia3.getVotosTotales() == 16);
-		assertTrue(sugerencia3.getValoracion() == (6/16));
+		assertTrue(sugerencia3.getValoracion() == (6/16d));
 	}
 	
 	@Test

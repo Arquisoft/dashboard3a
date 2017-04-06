@@ -194,7 +194,7 @@ public class Sugerencia {
 		if(votos == 0)
 			valoracion = 0;
 		else
-			valoracion = votosPositivos/votos;
+			valoracion = votosPositivos/(double)votos;
 		return valoracion;
 	}
 	

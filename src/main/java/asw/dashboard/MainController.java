@@ -46,6 +46,7 @@ public class MainController {
 		model.addAttribute("id", id);
 		model.addAttribute("detalles", sugerencia);
 		model.addAttribute("comentarios", sugerencia.getComentarios());
+		model.addAttribute("valoracion", sugerencia.getValoracion());
 		return "detallesSugerencia";
     }
 }

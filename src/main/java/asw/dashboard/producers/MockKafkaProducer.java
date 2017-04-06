@@ -1,6 +1,9 @@
 package asw.dashboard.producers;
 
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.annotation.ManagedBean;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +19,6 @@ import asw.model.Categoria;
 import asw.model.Comentario;
 import asw.model.Sugerencia;
 import asw.model.Usuario;
-
-import javax.annotation.ManagedBean;
 
 /**
  * Created by herminio on 26/12/16.
@@ -48,6 +49,8 @@ public class MockKafkaProducer {
 		Sugerencia sugerencia = new Sugerencia("Nueva sugerencia " + counter, 
 				new Categoria("Nueva categoría " + counter), 
 				new Usuario("Nuevo usuario " + counter));
+		sugerencia.setTitulo(sugerencia.getContenido());
+		sugerencia.setFecha(new Date());
 		
 		sendMessageJSON("sugerencias", sugerencia);
 	}
