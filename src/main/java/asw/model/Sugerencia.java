@@ -18,7 +18,6 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import asw.model.Association.Asignar;
 import asw.model.Association.AsignarCategoria;
 import asw.model.Association.AsignarSugerencia;
 
@@ -111,7 +110,7 @@ public class Sugerencia {
 		return votosNegativos;
 	}
 	
-	protected Set<Comentario> _getComentarios() {
+	public Set<Comentario> _getComentarios() {
 		return comentarios;
 	}
 	
