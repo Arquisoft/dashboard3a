@@ -40,7 +40,7 @@ public class Categoria {
 		return nombre;
 	}
 	
-	protected Set<Sugerencia> _getSugerencias() {
+	public Set<Sugerencia> _getSugerencias() {
 		return sugerencias;
 	}
 
