@@ -93,5 +93,14 @@ public class ComentarioTest {
 
 		assertEquals(comentario1.toString(), comentario.toString());
 	}
+	
+	@Test
+	public void testSetContenido() {
+		Comentario comentario = new Comentario("Mal", sugerencia1, usuario3);
+		assertTrue(comentario.getContenido().equals("Mal"));
+		
+		comentario.setContenido("Ahora cambio el contenido");
+		assertTrue(comentario.getContenido().equals("Ahora cambio el contenido"));
+	}
 
 }

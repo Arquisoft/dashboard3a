@@ -88,7 +88,7 @@ public class Usuario {
 		return new HashSet<>(sugerencias);
 	}
 
-	protected Set<Sugerencia> _getSugerencias() {
+	public Set<Sugerencia> _getSugerencias() {
 		return sugerencias;
 	}
 
@@ -100,7 +100,7 @@ public class Usuario {
 		return new HashSet<>(comentarios);
 	}
 
-	protected Set<Comentario> _getComentarios() {
+	public Set<Comentario> _getComentarios() {
 		return comentarios;
 	}
 

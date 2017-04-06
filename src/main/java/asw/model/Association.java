@@ -39,7 +39,7 @@ public class Association {
 		
 		public static void unlink(Comentario comentario, Sugerencia sugerencia, Usuario usuario){
 			usuario._removeComentario(comentario);
-			usuario._removeSugerencia(sugerencia);
+			sugerencia._getComentarios().remove(comentario);
 			comentario._setSugerencia(null);
 			comentario._setUsuario(null);
 		}
