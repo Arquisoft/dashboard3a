@@ -17,11 +17,14 @@ import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.stereotype.Component;
 
 import asw.model.Categoria;
+import asw.model.CitizenRepository;
+import asw.model.Ciudadano;
 import asw.model.Comentario;
 import asw.model.ComentarioRepository;
 import asw.model.Sugerencia;
 import asw.model.SugerenciaRepository;
 import asw.model.Usuario;
+import asw.util.Encrypter;
 
 @Component
 @Transactional
@@ -37,6 +40,9 @@ public class DataLoader implements ApplicationRunner {
 	private ComentarioRepository comentarioRepository;
 
 	@Autowired
+	private CitizenRepository citizenRepository;
+	
+	@Autowired
 	private JpaContext jpaContext;
 	
 	@Override
@@ -44,6 +50,22 @@ public class DataLoader implements ApplicationRunner {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		loadSugerencias(dateFormat);
 		loadComentarios(dateFormat);
+		
+		String clave1 = Encrypter.getInstance().makeSHA1Hash("user1");
+		Ciudadano ciud1 = new Ciudadano("user1", "user1", "user1@me.com", new Date(),
+				"casa1", "esp", "12345678A", new Usuario("user1", clave1));
+		
+		String clave2 = Encrypter.getInstance().makeSHA1Hash("user2");
+		Ciudadano ciud2 = new Ciudadano("user2", "user2", "user2@me.com", new Date(),
+				"casa2", "esp", "22345678A", new Usuario("user2", clave2));
+		
+		String clave3 = Encrypter.getInstance().makeSHA1Hash("user3");
+		Ciudadano ciud3 = new Ciudadano("user3", "user3", "user3@me.com", new Date(),
+				"casa3", "esp", "32345678A", new Usuario("user3", clave3));
+		
+		citizenRepository.save(ciud1);
+		citizenRepository.save(ciud2);
+		citizenRepository.save(ciud3);
 	}
 	
 	private void loadSugerencias(DateFormat dateFormat) throws NumberFormatException, IOException, ParseException {

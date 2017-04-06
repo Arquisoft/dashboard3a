@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import asw.model.CategoriaRepository;
 import asw.model.Comentario;
 import asw.model.ComentarioRepository;
 import asw.model.Sugerencia;
@@ -34,6 +35,9 @@ public class MessageListener {
 	
 	@Autowired
 	private ComentarioRepository comentarioRepository;
+	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 	
 	@Autowired
 	private JpaContext jpaContext;
@@ -61,6 +65,7 @@ public class MessageListener {
     	try {
     		Comentario comentario = new ObjectMapper().readValue(data, Comentario.class);
     		Sugerencia sugerencia = comentario.getSugerencia();
+    		categoriaRepository.saveAndFlush(sugerencia.getCategoria());
     		sugerencia = jpaContext.getEntityManagerByManagedType(sugerencia.getClass())
     								.merge(sugerencia);
     		comentario.setSugerencia(sugerencia);

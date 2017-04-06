@@ -56,7 +56,7 @@
 						window.myChart.update();
 
 						if (sugerencia.votosPositivos > positivosAntes) {
-							Push.create("Voto positivo" {
+							Push.create("Voto positivo", {
 		    				body: sugerencia.titulo,
 		    				timeout: 4000,
 		    				onClick: function () {

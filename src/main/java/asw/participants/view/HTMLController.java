@@ -31,12 +31,12 @@ public class HTMLController {
 	@Autowired
 	private CitizenRepository repository;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getLoginHtml(Model model) {
 		return "login";
 	}
 
-	@RequestMapping(value = "/validarse", method = RequestMethod.POST)
+	@RequestMapping(value = "/validarsepart", method = RequestMethod.POST)
 	public String postUserHtml(@RequestBody String parametros, Model model) {
 
 		String[] parametro = parametros.split("&");

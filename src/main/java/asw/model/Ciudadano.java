@@ -3,6 +3,8 @@ package asw.model;
 import java.util.Date;
 import javax.persistence.*;
 
+import asw.model.Association.Asignar;
+
 @Entity
 @Table(name = "TCiudadanos")
 public class Ciudadano {
@@ -24,7 +26,7 @@ public class Ciudadano {
 	
 	private RolCiudadano rol;
 
-	@OneToOne(mappedBy = "ciudadano")
+	@OneToOne(mappedBy = "ciudadano", cascade = CascadeType.PERSIST)
 	private Usuario usuario;
 
 	Ciudadano() {
@@ -43,6 +45,12 @@ public class Ciudadano {
 		this.fechaNacimiento = fechaNacimiento;
 		this.residencia = residencia;
 		this.nacionalidad = nacionalidad;
+	}
+	
+	public Ciudadano(String nombre, String apellidos, String email, Date fechaNacimiento, String residencia,
+			String nacionalidad, String dni, Usuario usuario) {
+		this(nombre, apellidos, email, fechaNacimiento, residencia, nacionalidad, dni);
+		Asignar.link(usuario, this);
 	}
 
 	public Long getId() {
