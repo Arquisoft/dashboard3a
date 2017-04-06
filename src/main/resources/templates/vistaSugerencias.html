@@ -2,83 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"/>
-	<title>Dashboard3a - Detalles sugerencia</title>
-	<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
-<script>
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ["Positivos", "Negativos"],
-        datasets: [{
-            label: '# de Votos',
-            data: [${detalles.votosPositivos}, ${detalles.votosNegativos}],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)'                
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-</script>
+	<meta http-equiv="refresh" content="2"/> 
+	<title>Dashboard3a - Listado sugerencias</title>
 </head>
 <body>
-	<h1>Detalles de la sugerencia</h1>
-	<p> <a href="graficas">Visualizar graficas</a> </p>
-	<table id="detallesSugerencia">
+	<h1>Propuestas actualmente en el sistema</h1>
+	<p><a href="graficas">Visualizar graficas</a></p>
+	<table id="tablaSugerencias">
 		<tr>
 			<th>Id</th>
 			<th>Titulo</th>
 			<th>Fecha</th>
-			<th>Votos positivos</th>
-			<th>Votos negativos</th>
 			<th>Votos totales</th>
+			<th>Num. comentarios</th>
+			<th>Detalles</th>
 		</tr>
-		<tr>
-			<td th:text="${detalles.id}" align="center"/>
-			<td th:text="${detalles.titulo}"/>
-			<td th:text="${detalles.fecha}"/>
-			<td th:text="${detalles.votosPositivos}" align="center" />
-			<td th:text="${detalles.votosNegativos}" align="center" />
-			<td th:text="${detalles.votosTotales}" align="center" />
-		</tr>
-	</table>
-	
-	<h2>Valoracion media de la propuesta:</h2>
-	<div th:if="${detalles.valoracion} &lt; 0.5">
-		<p th:text="${detalles.valoracion}" style="color:red;"></p>
-	</div>
-	<div th:unless="${detalles.valoracion} &lt; 0.5">
-		<p th:text="${detalles.valoracion}" style="color:green;"></p>
-	</div>
-	
-	<h2>Comentarios de la propuesta</h2>
-	<table id="tablaComentarios">
-		<tr>
-			<th>Id</th>
-			<th>Comentario</th>
-		</tr>
-		<tr th:each="comentario : ${detalles.comentarios}">
-			<td th:text="${comentario.id}" align="center"/>
-			<td th:text="${comentario.contenido}"/>
+		<tr th:each="sugerencia : ${sugerencias}">
+			<td th:text="${sugerencia.id}" align="center"/>
+			<td th:text="${sugerencia.titulo}"/>
+			<td th:text="${sugerencia.fecha}"/>
+			<td th:text="${sugerencia.votosTotales}" align="center" />
+			<td th:text="${sugerencia.numComentarios}" align="center" />
+			<td><a th:href="${sugerencia.id}" th:text="Detalles"></a></td>
 		</tr>
 	</table>
-		<h2>Diagrama circular - Relación votos</h2>
-	<canvas id="myChart" width="400" height="400"></canvas>
 </body>
 </html>
