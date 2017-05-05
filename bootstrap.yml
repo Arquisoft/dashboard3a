@@ -1,0 +1,4 @@
+spring:
+  cloud:
+    zookeeper:
+      connect-string: steamer-01.srvs.cloudkafka.coms
