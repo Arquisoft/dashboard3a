@@ -48,7 +48,7 @@ public class MainController {
         return "vistaGraficas";
     }
     
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/sugerencias/{id}", method = RequestMethod.GET)
 	public String detalles(@PathVariable("id") String id, Model model) {
     	Long ident = Long.valueOf(id);
     	Sugerencia sugerencia = sugerenciaRepository.findOne(ident);
@@ -84,8 +84,9 @@ public class MainController {
 				return "redirect:/sugerencias";					
 
 			return "datos";
+		} else { 
+			//Ciudadano no encontrado
+			return "ciudadanoNoExiste";
 		}
-		else 
-			throw new CitizenNotFoundError();
 	}
 }

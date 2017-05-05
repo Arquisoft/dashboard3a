@@ -8,9 +8,16 @@
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.13/push.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+	td, th {
+		text-align: center;
+	}
+	</style>
 	<script>
 		$(document).ready(function() {
-		var tabla = $("#tablaComentarios");
+		var tabla = $("#tablaComentariosBody");
 		var idSug = parseInt($("#idSugerencia").html());
 
 		var socket = new SockJS('/stomp');
@@ -84,49 +91,54 @@
 </head>
 <body>
 	<h1>Detalles de la sugerencia</h1>
-	<p>
-		<a href="graficas">Visualizar graficas</a>
-	</p>
-	<table id="detallesSugerencia">
-		<tr>
-			<th>Id</th>
-			<th>Titulo</th>
-			<th>Fecha</th>
-			<th>Votos positivos</th>
-			<th>Votos negativos</th>
-			<th>Votos totales</th>
-		</tr>
-		<tr>
-			<td id="idSugerencia" th:text="${detalles.id}" align="center" />
-			<td th:text="${detalles.titulo}" />
-			<td th:text="${detalles.fecha}" />
-			<td id="votosPositivos" th:text="${detalles.votosPositivos}" align="center" />
-			<td id="votosNegativos" th:text="${detalles.votosNegativos}" align="center" />
-			<td id="votosTotales" th:text="${detalles.votosTotales}" align="center" />
-		</tr>
+	<table class="table" id="detallesSugerencia">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Titulo</th>
+				<th>Fecha</th>
+				<th>Votos positivos</th>
+				<th>Votos negativos</th>
+				<th>Votos totales</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td id="idSugerencia" th:text="${detalles.id}" align="center" />
+				<td th:text="${detalles.titulo}" />
+				<td th:text="${detalles.fecha}" />
+				<td id="votosPositivos" th:text="${detalles.votosPositivos}" align="center" />
+				<td id="votosNegativos" th:text="${detalles.votosNegativos}" align="center" />
+				<td id="votosTotales" th:text="${detalles.votosTotales}" align="center" />
+			</tr>
+		</tbody>
 	</table>
 
-	<h2>Valoracion media de la propuesta:</h2>
+	<h2>Valoración media de la propuesta:</h2>
 	<div th:if="${valoracion} &lt; 0.5">
-		<p th:text="${valoracion}" style="color: red;"></p>
+		<p th:text="${valoracion}" style="color: red;text-align:center;"></p>
 	</div>
 	<div th:unless="${valoracion} &lt; 0.5">
-		<p th:text="${valoracion}" style="color: green;"></p>
+		<p th:text="${valoracion}" style="color: green;text-align:center;"></p>
 	</div>
 
 	<h2>Comentarios de la propuesta</h2>
-	<table id="tablaComentarios">
-		<tr>
-			<th>Id</th>
-			<th>Comentario</th>
-		</tr>
-		<tr th:each="comentario : ${comentarios}">
-			<td th:text="${comentario.id}" align="center" />
-			<td th:text="${comentario.contenido}" />
-		</tr>
+	<table class="table table-hover" id="tablaComentarios">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Comentario</th>
+			</tr>
+		</thead>
+		<tbody id="tablaComentariosBody">
+			<tr th:each="comentario : ${comentarios}">
+				<td th:text="${comentario.id}" align="center" />
+				<td th:text="${comentario.contenido}" />
+			</tr>
+		</tbody>
 	</table>
 	<h2>Diagrama circular - Relación votos</h2>
-	<div id="canvas-holder" style="width:400px">
+	<div id="canvas-holder" style="width:400px;margin: 0 auto;">
 		<canvas id="myChart"></canvas>
 	</div>
 	<script>

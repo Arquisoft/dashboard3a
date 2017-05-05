@@ -7,9 +7,11 @@
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function() {
-		var tabla = $("#tablaSugerencias");
+		var tabla = $("#tablaSugerenciasBody");
 
 		var socket = new SockJS('/stomp');
 
@@ -36,7 +38,7 @@
 						<td>${moment(new Date(sugerencia.fecha)).format("YYYY-MM-DD")}</td>
 						<td class="votos_totales" align="center">${sugerencia.votosTotales}</td>
 						<td align="center">${sugerencia.numComentarios}</td>
-						<td><a href="${sugerencia.id}">Detalles</a></td>
+						<td><a href="sugerencias/${sugerencia.id}">Detalles</a></td>
 					</tr>
 					`;
 					 tabla.append(htmlstring);
@@ -45,27 +47,35 @@
 	    });
 	});
 	</script>
+	<style>
+	td, th {
+		text-align: center;
+	}
+	</style>
 </head>
 <body>
 	<h1>Propuestas actualmente en el sistema</h1>
-	<p><a href="graficas">Visualizar graficas</a></p>
-	<table id="tablaSugerencias">
-		<tr>
-			<th>Id</th>
-			<th>Titulo</th>
-			<th>Fecha</th>
-			<th>Votos totales</th>
-			<th>Num. comentarios</th>
-			<th>Detalles</th>
-		</tr>
-		<tr th:each="sugerencia : ${sugerencias}">
-			<td th:text="${sugerencia.id}" align="center"/>
-			<td class="titSugerencia" th:text="${sugerencia.titulo}"/>
-			<td th:text="${sugerencia.fecha}"/>
-			<td th:text="${sugerencia.votosTotales}" align="center" />
-			<td th:text="${sugerencia.numComentarios}" align="center" />
-			<td><a th:href="${sugerencia.id}" th:text="Detalles"></a></td>
-		</tr>
+	<table class="table table-hover" id="tablaSugerencias">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Titulo</th>
+				<th>Fecha</th>
+				<th>Votos totales</th>
+				<th>Num. comentarios</th>
+				<th>Detalles</th>
+			</tr>
+		</thead>
+		<tbody id="tablaSugerenciasBody">
+			<tr th:each="sugerencia : ${sugerencias}">
+				<td th:text="${sugerencia.id}" align="center"/>
+				<td class="titSugerencia" th:text="${sugerencia.titulo}"/>
+				<td th:text="${sugerencia.fecha}"/>
+				<td th:text="${sugerencia.votosTotales}" align="center" />
+				<td th:text="${sugerencia.numComentarios}" align="center" />
+				<td><a th:href="@{sugerencias/{id}(id=${sugerencia.id})}" th:text="Detalles"></a></td>
+			</tr>
+		</tbody>
 	</table>
 </body>
 </html>
