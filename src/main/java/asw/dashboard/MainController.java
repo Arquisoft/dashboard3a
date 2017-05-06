@@ -10,22 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import asw.model.CitizenRepository;
-import asw.model.Ciudadano;
-import asw.model.ComentarioRepository;
-import asw.model.RolCiudadano;
-import asw.model.Sugerencia;
-import asw.model.SugerenciaRepository;
+import asw.model.Citizen;
+import asw.model.Suggestion;
+import asw.repositories.CitizenRepository;
+import asw.repositories.CommentRepository;
+import asw.repositories.SuggestionRepository;
 import asw.util.Encrypter;
 
 @Controller
 public class MainController {
 
     @Autowired
-    private SugerenciaRepository sugerenciaRepository;
+    private SuggestionRepository sugerenciaRepository;
     
     @Autowired
-    private ComentarioRepository comentarioRepository;
+    private CommentRepository comentarioRepository;
     
     @Autowired
     private CitizenRepository repository;
@@ -52,11 +51,11 @@ public class MainController {
     @RequestMapping(path = "/sugerencias/{id}", method = RequestMethod.GET)
 	public String detalles(@PathVariable("id") String id, Model model) {
     	Long ident = Long.valueOf(id);
-    	Sugerencia sugerencia = sugerenciaRepository.findOne(ident);
+    	Suggestion sugerencia = sugerenciaRepository.findOne(ident);
 		model.addAttribute("id", id);
 		model.addAttribute("detalles", sugerencia);
-		model.addAttribute("comentarios", sugerencia.getComentarios());
-		model.addAttribute("valoracion", sugerencia.getValoracion());
+		model.addAttribute("comentarios", sugerencia.getComments());
+		model.addAttribute("valoracion", sugerencia.getRating());
 		return "detallesSugerencia";
     }
     
@@ -70,21 +69,21 @@ public class MainController {
 		String contraseña = parametro[1].split("=")[1];
 
 		String contraseñaEncriptada = Encrypter.getInstance().makeSHA1Hash(contraseña);
-		Ciudadano user = repository.findByEmailAndPassword(email, contraseñaEncriptada);
+		Citizen user = repository.findByEmailAndPassword(email, contraseñaEncriptada);
 
 		if (user != null) {
 
 			model.addAttribute("email", user.getEmail());
-			model.addAttribute("firstName", user.getNombre());
-			model.addAttribute("lastName", user.getApellidos());
+			model.addAttribute("firstName", user.getName());
+			model.addAttribute("lastName", user.getSurname());
 			model.addAttribute("nif", user.getDni());
-			model.addAttribute("address", user.getResidencia());
-			model.addAttribute("nationality", user.getNacionalidad());
-			model.addAttribute("role", user.getRol());
+			model.addAttribute("address", user.getResidence());
+			model.addAttribute("nationality", user.getNationality());
+			model.addAttribute("admin", user.getUser().isAdmin());
 
-			if (user.getRol() != RolCiudadano.PARTICIPANT) 
-				return "redirect:/sugerencias";					
-
+			if (user.getUser().isAdmin())
+				return "redirect:/sugerencias";
+			
 			return "datos";
 		} else { 
 			//Ciudadano no encontrado

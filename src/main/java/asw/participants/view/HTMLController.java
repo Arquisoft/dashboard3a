@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import asw.util.Encrypter;
-import asw.model.Ciudadano;
-import asw.model.RolCiudadano;
+import asw.model.Citizen;
+import asw.repositories.CitizenRepository;
 import asw.participants.information.errors.CitizenNotFoundError;
 import asw.participants.information.errors.ErrorInterface;
-import asw.model.CitizenRepository;
 
 /**
  * Representa la información que irá en el JSON cuando se 
@@ -45,21 +44,21 @@ public class HTMLController {
 		String contraseña = parametro[1].split("=")[1];
 
 		String contraseñaEncriptada = Encrypter.getInstance().makeSHA1Hash(contraseña);
-		Ciudadano user = repository.findByEmailAndPassword(email, contraseñaEncriptada);
+		Citizen user = repository.findByEmailAndPassword(email, contraseñaEncriptada);
 
 		if (user != null) {
 
 			model.addAttribute("email", user.getEmail());
-			model.addAttribute("firstName", user.getNombre());
-			model.addAttribute("lastName", user.getApellidos());
+			model.addAttribute("firstName", user.getName());
+			model.addAttribute("lastName", user.getSurname());
 			model.addAttribute("nif", user.getDni());
-			model.addAttribute("address", user.getResidencia());
-			model.addAttribute("nationality", user.getNacionalidad());
-			model.addAttribute("role", user.getRol());
+			model.addAttribute("address", user.getResidence());
+			model.addAttribute("nationality", user.getNationality());
+			model.addAttribute("admin", user.getUser().isAdmin());
 
-			if (user.getRol() != RolCiudadano.PARTICIPANT) 
-				return "vistaSugerencias";					
-
+			if (user.getUser().isAdmin())
+				return "vistaSugerencias";
+			
 			return "datos";
 		}
 		else 

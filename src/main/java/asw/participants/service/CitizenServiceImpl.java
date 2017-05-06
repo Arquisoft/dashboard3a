@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import asw.model.CitizenRepository;
-import asw.model.Ciudadano;
+import asw.model.Citizen;
+import asw.repositories.CitizenRepository;
 
 /**
  * Implementación de los servicios de 
@@ -22,22 +22,22 @@ public class CitizenServiceImpl implements CitizenService {
 	private CitizenRepository citizenRepository;
 
 	@Override
-	public List<Ciudadano> findCitizens() {
+	public List<Citizen> findCitizens() {
 		return citizenRepository.findAll();
 	}
 
 	@Override
-	public void saveCitizen(Ciudadano ciudadano) {
+	public void saveCitizen(Citizen ciudadano) {
 		citizenRepository.save(ciudadano);
 	}
 
 	@Override
-	public Ciudadano findByEmailAndPassword(String email, String password) {
+	public Citizen findByEmailAndPassword(String email, String password) {
 		return citizenRepository.findByEmailAndPassword(email, password);
 	}
 	
 	@Override
-	public void removeCitizen(Ciudadano ciudadano) {
+	public void removeCitizen(Citizen ciudadano) {
 		citizenRepository.delete(ciudadano);
 	}
 }

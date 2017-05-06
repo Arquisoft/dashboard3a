@@ -1,7 +1,10 @@
-package asw.model;
+package asw.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import asw.model.Citizen;
 
 /**
  * Interfaz para trabajar con la base de datos de usuarios
@@ -10,7 +13,8 @@ import org.springframework.data.jpa.repository.Query;
  * @author UO246008
  *
  */
-public interface CitizenRepository extends JpaRepository<Ciudadano, Long> {
+@Repository
+public interface CitizenRepository extends JpaRepository<Citizen, Long> {
 	/**
 	 * Busca un usuario dados su login y contraseña
 	 * 
@@ -18,6 +22,6 @@ public interface CitizenRepository extends JpaRepository<Ciudadano, Long> {
 	 * @param password contraseña
 	 * @return usuario con ese login y contraseña
 	*/
-	 @Query("select c from Ciudadano c where c.email = ?1 and c.usuario.contraseña = ?2")
-	 Ciudadano findByEmailAndPassword(String email, String password);
+	 @Query("select c from Citizen c where c.email = ?1 and c.user.password = ?2")
+	 Citizen findByEmailAndPassword(String email, String password);
 }

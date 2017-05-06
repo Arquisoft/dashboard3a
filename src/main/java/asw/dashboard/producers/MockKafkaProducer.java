@@ -15,10 +15,10 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import asw.model.Categoria;
-import asw.model.Comentario;
-import asw.model.Sugerencia;
-import asw.model.Usuario;
+import asw.model.Category;
+import asw.model.Comment;
+import asw.model.Suggestion;
+import asw.model.User;
 
 /**
  * Created by herminio on 26/12/16.
@@ -35,10 +35,10 @@ public class MockKafkaProducer {
 
 	public void sendComentario() {
 		int counter = MockKafkaProducer.counterComentario.incrementAndGet();
-		Usuario usuario = new Usuario("Nuevo usuario " + counter);
-		Comentario comentario = new Comentario("Nuevo comentario" + counter, 
-				new Sugerencia("Nueva sugerencia" + counter, 
-						new Categoria("Nueva categoría " + counter), usuario), 
+		User usuario = new User("Nuevo usuario " + counter, null);
+		Comment comentario = new Comment("Nuevo comentario" + counter, 
+				new Suggestion("Nueva sugerencia" + counter, 
+						new Category("Nueva categoría " + counter), usuario), 
 				usuario);
 				
 		sendMessageJSON("comentarios", comentario);
@@ -46,11 +46,10 @@ public class MockKafkaProducer {
 
 	public void sendSugerencia() {
 		int counter = MockKafkaProducer.counterSugerencia.incrementAndGet();
-		Sugerencia sugerencia = new Sugerencia("Nueva sugerencia " + counter, 
-				new Categoria("Nueva categoría " + counter), 
-				new Usuario("Nuevo usuario " + counter));
-		sugerencia.setTitulo(sugerencia.getContenido());
-		sugerencia.setFecha(new Date());
+		Suggestion sugerencia = new Suggestion("Nueva sugerencia " + counter, 
+				new Category("Nueva categoría " + counter), 
+				new User("Nuevo usuario " + counter, null));
+		sugerencia.setCreationDate(new Date());
 		
 		sendMessageJSON("sugerencias", sugerencia);
 	}

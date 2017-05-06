@@ -28,18 +28,18 @@
 			stompClient.subscribe("/topic/comentarios", function(data) {
 				var comentario = JSON.parse(data.body);
 
-				if (comentario.sugerencia.id === idSug) {
+				if (comentario.suggestion.id === idSug) {
 					var htmlString = `
 					<tr>
 						<td align="center">${comentario.id}</td>
-						<td>${comentario.contenido}</td>
+						<td>${comentario.contents}</td>
 					</tr>
 					`;
 
 					tabla.append(htmlString);
 
 					Push.create("Nuevo comentario", {
-    				body: comentario.contenido,
+    				body: comentario.contents,
     				timeout: 4000,
     				onClick: function () {
         			window.focus();
@@ -55,16 +55,16 @@
 				if (sugerencia.id === idSug) {
 						var positivosAntes = parseInt($("#votosPositivos").html());
 						var negativosAntes = parseInt($("#votosNegativos").html());
-						$("#votosPositivos").html(sugerencia.votosPositivos.toString());
-						$("#votosNegativos").html(sugerencia.votosNegativos.toString());
-						$("#votosTotales").html("" + (sugerencia.votosPositivos + sugerencia.votosNegativos));
-						window.myChart.data.datasets[0].data[0] = sugerencia.votosPositivos;
-						window.myChart.data.datasets[0].data[1] = sugerencia.votosNegativos;
+						$("#votosPositivos").html(sugerencia.positiveVotes.toString());
+						$("#votosNegativos").html(sugerencia.negativeVotes.toString());
+						$("#votosTotales").html("" + (sugerencia.totalVotes));
+						window.myChart.data.datasets[0].data[0] = sugerencia.positiveVotes;
+						window.myChart.data.datasets[0].data[1] = sugerencia.negativeVotes;
 						window.myChart.update();
 
-						if (sugerencia.votosPositivos > positivosAntes) {
+						if (sugerencia.positiveVotes > positivosAntes) {
 							Push.create("Voto positivo", {
-		    				body: sugerencia.titulo,
+		    				body: sugerencia.contents,
 		    				timeout: 4000,
 		    				onClick: function () {
 		        			window.focus();
@@ -73,9 +73,9 @@
 							});
 						}
 
-						if (sugerencia.votosNegativos > negativosAntes) {
+						if (sugerencia.negativeVotes > negativosAntes) {
 							Push.create("Voto negativo", {
-		    				body: sugerencia.titulo,
+		    				body: sugerencia.contents,
 		    				timeout: 4000,
 		    				onClick: function () {
 		        			window.focus();
@@ -105,11 +105,11 @@
 		<tbody>
 			<tr>
 				<td id="idSugerencia" th:text="${detalles.id}" align="center" />
-				<td th:text="${detalles.titulo}" />
-				<td th:text="${detalles.fecha}" />
-				<td id="votosPositivos" th:text="${detalles.votosPositivos}" align="center" />
-				<td id="votosNegativos" th:text="${detalles.votosNegativos}" align="center" />
-				<td id="votosTotales" th:text="${detalles.votosTotales}" align="center" />
+				<td th:text="${detalles.contents}" />
+				<td th:text="${detalles.creationDate}" />
+				<td id="votosPositivos" th:text="${detalles.positiveVotes}" align="center" />
+				<td id="votosNegativos" th:text="${detalles.negativeVotes}" align="center" />
+				<td id="votosTotales" th:text="${detalles.totalVotes}" align="center" />
 			</tr>
 		</tbody>
 	</table>
@@ -133,7 +133,7 @@
 		<tbody id="tablaComentariosBody">
 			<tr th:each="comentario : ${comentarios}">
 				<td th:text="${comentario.id}" align="center" />
-				<td th:text="${comentario.contenido}" />
+				<td th:text="${comentario.contents}" />
 			</tr>
 		</tbody>
 	</table>

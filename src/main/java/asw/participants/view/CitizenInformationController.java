@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import asw.util.Encrypter;
 import asw.participants.information.citizen.CitizenInformationRequest;
 import asw.participants.information.citizen.CitizenInformationResponse;
-import asw.model.Ciudadano;
+import asw.model.Citizen;
 import asw.participants.service.CitizenService;
 import asw.participants.information.errors.*;
 
@@ -46,7 +46,7 @@ public class CitizenInformationController {
 		String password = form.getPassword();		
 		String encryptedPassword = Encrypter.getInstance().makeSHA1Hash(password);
 
-		Ciudadano ciudadano = citizenService.findByEmailAndPassword(email, encryptedPassword);		
+		Citizen ciudadano = citizenService.findByEmailAndPassword(email, encryptedPassword);		
 		
 		if (ciudadano != null) {
 			

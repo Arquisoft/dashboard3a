@@ -2,11 +2,10 @@ package asw.dashboard.services;
 
 import java.util.List;
 
-import asw.model.Comentario;
-import asw.model.Sugerencia;
+import asw.model.Comment;
+import asw.model.Suggestion;
 
 public interface ComentarioService {
-	List<Comentario> findAll();
-	
-	List<Comentario> findBySugerencia(Sugerencia sugerencia);
+	List<Comment> findAll();
+	List<Comment> findBySugerencia(Suggestion sugerencia);
 }

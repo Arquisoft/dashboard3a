@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 
-import asw.model.Ciudadano;
+import asw.model.Citizen;
 
 /**
  * Representa la información que irá en el JSON cuando se 
@@ -22,12 +22,12 @@ public class CitizenInformationResponse {
 	private int  age;
 	private String email;
 
-	public CitizenInformationResponse(Ciudadano ciudadano) {
+	public CitizenInformationResponse(Citizen ciudadano) {
 		
 		this.id = ciudadano.getId();
-		this.firstName = ciudadano.getNombre();
-		this.lastName = ciudadano.getApellidos();
-		this.age = getAge((Date) ciudadano.getFechaNacimiento());
+		this.firstName = ciudadano.getName();
+		this.lastName = ciudadano.getSurname();
+		this.age = getAge((Date) ciudadano.getBirthday());
 		this.email = ciudadano.getEmail();
 	}
 	

@@ -23,8 +23,8 @@
 				var encontrado = false;
 
 				$(".titSugerencia").each(function(i) {
-					if (this.innerHTML === sugerencia.titulo) {
-						$(this).next().next().html("" + (sugerencia.votosPositivos + sugerencia.votosNegativos));
+					if (this.innerHTML === sugerencia.contents) {
+						$(this).next().next().html("" + (sugerencia.positiveVotes + sugerencia.negativeVotes));
 						encontrado = true;
 						return false;
 					}
@@ -34,10 +34,10 @@
 					var htmlstring = `
 					<tr>
 						<td>${sugerencia.id}</td>
-						<td class="titSugerencia">${sugerencia.titulo}</td>
-						<td>${moment(new Date(sugerencia.fecha)).format("YYYY-MM-DD")}</td>
-						<td class="votos_totales" align="center">${sugerencia.votosTotales}</td>
-						<td align="center">${sugerencia.numComentarios}</td>
+						<td class="titSugerencia">${sugerencia.contents}</td>
+						<td>${moment(new Date(sugerencia.creationDate)).format("YYYY-MM-DD")}</td>
+						<td class="votos_totales" align="center">${sugerencia.totalVotes}</td>
+						<td align="center">${sugerencia.numComments}</td>
 						<td><a href="sugerencias/${sugerencia.id}">Detalles</a></td>
 					</tr>
 					`;
@@ -69,10 +69,10 @@
 		<tbody id="tablaSugerenciasBody">
 			<tr th:each="sugerencia : ${sugerencias}">
 				<td th:text="${sugerencia.id}" align="center"/>
-				<td class="titSugerencia" th:text="${sugerencia.titulo}"/>
-				<td th:text="${sugerencia.fecha}"/>
-				<td th:text="${sugerencia.votosTotales}" align="center" />
-				<td th:text="${sugerencia.numComentarios}" align="center" />
+				<td class="titSugerencia" th:text="${sugerencia.contents}"/>
+				<td th:text="${sugerencia.creationDate}"/>
+				<td th:text="${sugerencia.totalVotes}" align="center" />
+				<td th:text="${sugerencia.numComments}" align="center" />
 				<td><a th:href="@{sugerencias/{id}(id=${sugerencia.id})}" th:text="Detalles"></a></td>
 			</tr>
 		</tbody>
