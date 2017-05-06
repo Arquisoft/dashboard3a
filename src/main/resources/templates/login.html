@@ -10,16 +10,16 @@
 </head>
 <body>
   <div class="wrapper">
-    <form action="validarse" method="post" class="form-signin">       
+    <form action="validarse" method="post" class="form-signin">
       <h2 class="form-signin-heading">Bienvenido/a</h2>
-      <input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
+      <input type="text" class="form-control" name="email" placeholder="E-mail" required="" autofocus="" />
       <br />
-      <input type="password" class="form-control" name="password" placeholder="Password" required=""/> 
-      <br />   
+      <input type="password" class="form-control" name="password" placeholder="Contraseña" required=""/>
+      <br />
 	  <div th:if="${invalidUser}">
 	  	<p style="color: red;text-align:center;">Usuario o contraseña incorrecto</p>
 	  </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>   
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
     </form>
   </div>
 </body>

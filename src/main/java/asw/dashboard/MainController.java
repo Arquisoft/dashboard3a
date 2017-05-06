@@ -37,17 +37,35 @@ public class MainController {
     }
     
     @RequestMapping("/sugerencias")
-    public String vistaSugerencias(Model model) {
+    public String vistaSugerencias(Model model,
+    		@ModelAttribute("user") final Citizen citizen) {
+    	
+    	if (citizen == null || citizen.getUser() == null)
+    		return "redirect:/";
+    	
     	model.addAttribute("sugerencias", sugerenciaRepository.findAll());
     	model.addAttribute("comentarios", comentarioRepository.findAll());
         return "vistaSugerencias";
     }
     
-    @RequestMapping("/graficas")
-    public String vistaGraficas(Model model) {
-        return "vistaGraficas";
+    @RequestMapping("/datos")
+    public String vistaDatos(Model model,
+    		@ModelAttribute("user") final Citizen citizen) {
+
+    	if (citizen == null || citizen.getUser() == null)
+    		return "redirect:/";
+    	
+		model.addAttribute("email", citizen.getEmail());
+		model.addAttribute("firstName", citizen.getName());
+		model.addAttribute("lastName", citizen.getSurname());
+		model.addAttribute("nif", citizen.getDni());
+		model.addAttribute("address", citizen.getResidence());
+		model.addAttribute("nationality", citizen.getNationality());
+		model.addAttribute("admin", citizen.getUser().isAdmin());
+		
+    	return "datos";
     }
-    
+
     @RequestMapping(path = "/sugerencias/{id}", method = RequestMethod.GET)
 	public String detalles(@PathVariable("id") String id, Model model) {
     	Long ident = Long.valueOf(id);
@@ -72,19 +90,13 @@ public class MainController {
 		Citizen user = repository.findByEmailAndPassword(email, contraseñaEncriptada);
 
 		if (user != null) {
-
-			model.addAttribute("email", user.getEmail());
-			model.addAttribute("firstName", user.getName());
-			model.addAttribute("lastName", user.getSurname());
-			model.addAttribute("nif", user.getDni());
-			model.addAttribute("address", user.getResidence());
-			model.addAttribute("nationality", user.getNationality());
-			model.addAttribute("admin", user.getUser().isAdmin());
-
+			
+			redirectAttributes.addFlashAttribute("user", user);
+			
 			if (user.getUser().isAdmin())
 				return "redirect:/sugerencias";
 			
-			return "datos";
+			return "redirect:/datos";
 		} else { 
 			//Ciudadano no encontrado
 			redirectAttributes.addFlashAttribute("invalidUser", true);

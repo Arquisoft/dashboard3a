@@ -58,6 +58,7 @@
 						$("#votosPositivos").html(sugerencia.positiveVotes.toString());
 						$("#votosNegativos").html(sugerencia.negativeVotes.toString());
 						$("#votosTotales").html("" + (sugerencia.totalVotes));
+						$("#pValoracion").html(sugerencia.rating.toString());
 						window.myChart.data.datasets[0].data[0] = sugerencia.positiveVotes;
 						window.myChart.data.datasets[0].data[1] = sugerencia.negativeVotes;
 						window.myChart.update();
@@ -116,10 +117,10 @@
 
 	<h2>Valoración media de la propuesta:</h2>
 	<div th:if="${valoracion} &lt; 0.5">
-		<p th:text="${valoracion}" style="color: red;text-align:center;"></p>
+		<p id="pValoracion" th:text="${valoracion}" style="color: red;text-align:center;"></p>
 	</div>
 	<div th:unless="${valoracion} &lt; 0.5">
-		<p th:text="${valoracion}" style="color: green;text-align:center;"></p>
+		<p id="pValoracion" th:text="${valoracion}" style="color: green;text-align:center;"></p>
 	</div>
 
 	<h2>Comentarios de la propuesta</h2>
